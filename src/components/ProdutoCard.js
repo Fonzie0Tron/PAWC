@@ -1,10 +1,13 @@
 import React from "react";
+import { useCart } from "../CartContext";
 
 function ProdutoCard(props) {
     // Calculate average rating from reviews
     const averageRating = props.reviews && props.reviews.length > 0
         ? (props.reviews.reduce((sum, review) => sum + review.score, 0) / props.reviews.length).toFixed(1)
         : "N/A";
+
+    const { addToCart } = useCart();
 
     return (
         <div class="produto_card">
@@ -22,7 +25,17 @@ function ProdutoCard(props) {
                 <div class="rating">
                     <span>⭐ {averageRating}</span>
                 </div>
-                <button class="button">Comprar</button>
+                <button 
+                    class="button"
+                    onClick={() => addToCart({
+                        id: props.id,
+                        name: props.name || props.title,
+                        price: props.price,
+                        type: props.type
+                    })}
+                    >
+                        Comprar
+                </button>
                 <button class="button">Favorito</button>
             </div>
         </div>
