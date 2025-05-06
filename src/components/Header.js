@@ -23,6 +23,7 @@ function Header () {
                 <ul class="nav-list" onClick={openMenu}>
                     <li><NavLink to='/' >Home</NavLink></li>
                     <li><NavLink to='/produtos' >Produtos</NavLink></li>
+                    <li><NavLink to='/favoritos' >Favoritos</NavLink></li>
                     <li><NavLink to="/carrinho" className="cart-link">Carrinho ({totalItems})</NavLink></li>
                 </ul>
             </nav>

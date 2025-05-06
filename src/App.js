@@ -6,9 +6,8 @@ import Produtos from "./pages/Produtos";
 import Header from "./components/Header";
 import Carrinho from "./pages/Carrinho";
 import { CartProvider } from './CartContext';
-{/*import Produto from "./pages/Produto";
 import Favoritos from "./pages/Favoritos";
-*/}
+import Produto from "./pages/Produto";
 
 
 function App() {
@@ -21,8 +20,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/produtos" element={<Produtos />} />
           <Route path="/carrinho" element={<Carrinho />} />
-          {/*<Route path="/produto/:produto_id" element={<Produto />} />
-          <Route path="/favoritos" element={<Favoritos />} />*/ }
+          <Route path="/favoritos" element={<Favoritos />} />
+          <Route path="/produtos/:id" element={<Produto />} />
         </Routes>
        <Footer />
      </Router>

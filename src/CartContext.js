@@ -4,6 +4,7 @@ const CartContext = createContext();
 
 export function CartProvider(props) {
     const [cart, setCart] = useState([]);
+    const [favorites, setFavorites] = useState([]);
 
     // Função para ADICIONAR produto ao carrinho
     function addToCart(product) {
@@ -82,6 +83,20 @@ export function CartProvider(props) {
         setCart(newCart);
     }
 
+    // Função para adicionar aos favoritos
+    function addToFavorites(product) {
+        if (!favorites.some(f => f.id === product.id)) {
+        setFavorites([...favorites, product]);
+            }
+        }
+
+    // Função para remover dos favoritos
+    function removeFromFavorites(productId) {
+        setFavorites(favorites.filter(f => f.id !== productId));
+        }
+
+
+    
     // Calcula o TOTAL DE ITENS no carrinho
     function getTotalItems() {
         let total = 0;
@@ -110,6 +125,9 @@ export function CartProvider(props) {
                 updateQuantity: updateQuantity,
                 totalItems: getTotalItems(),
                 totalPrice: getTotalPrice(),
+                favorites,
+                addToFavorites,
+                removeFromFavorites,
             }}
         >
             {props.children}

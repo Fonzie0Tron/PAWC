@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import ProdutoCard from "../components/ProdutoCard";
 
 {/*a. Lista em forma de grelha com todos os produtos disponíveis na base
-de dados;
-b. Paginação;
-c. Ordenar produtos por preço ou rating;
-d. Filtrar por tipo de produto; */}
+de dados; feito
+b. Paginação; feito
+c. Ordenar produtos por preço ou rating; feito
+d. Filtrar por tipo de produto; feito */}
 
 function Produtos() {
     const [produtos, setProdutos] = useState([]);
@@ -17,7 +17,7 @@ function Produtos() {
 
     const getProdutos = async () => {
         try {
-            const response = await fetch('http://localhost:3030/produtos', {
+            const response = await fetch('http://localhost:3000/produtos', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
