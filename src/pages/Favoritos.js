@@ -24,7 +24,7 @@ const Favoritos = () => {
               return (
                 <div key={produto.id} className="produto_card">
                   <div className="produto_tipo">
-                    <p>{produto.category}</p>
+                    <p>{produto.type}</p>
                   </div>
                   <div className="produto_img">
                     <img

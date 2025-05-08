@@ -19,7 +19,7 @@ function Produto() {
     const getProduto = async () => {
         try {
 
-            const response = await fetch(`http://localhost:3000/produtos/${id}`, {
+            const response = await fetch(`http://localhost:3030/produtos/${id}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             });
@@ -28,7 +28,7 @@ function Produto() {
 
 
             const response2 = await fetch(
-                `http://localhost:3000/produtos?category=${encodeURIComponent(data.category)}`,
+                `http://localhost:3030/produtos?category=${encodeURIComponent(data.category)}`,
                 { method: "GET", headers: { "Content-Type": "application/json" } }
             );
             const lista = await response2.json();

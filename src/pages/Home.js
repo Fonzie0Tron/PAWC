@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Slider from "../components/Slider";
 import ProdutoCard from "../components/ProdutoCard";
-import UserComponent from "../components/UserComponent";
 
 {/* a. Seção com “top produtos” (produtos com maior rating)
 b. Campo de pesquisa (pesquisa por nome de produto, tipo, categoria,
@@ -9,81 +8,57 @@ etc.) */}
 
 
 const Home = () => {
-    let [produtos, setProdutos] = useState([]);
-    let [filtro, setFiltro] = useState('Comida');
-    const [userName, setUserName] = useState('');
-  
-    const [users, setUsers] = useState([
-       {id: 0, name: "John"},
-       {id: 1, name: "Doe"},
-     ]);
-  
-  
-    function handleChangeInput(e) {
-      setUserName(e.target.value)
-    }
-  
-  
-    function handleAddUser() {
-      setUsers([
-        ...users,
-        { id: users.length, name: userName}
-      ]);
-      setUserName('')
-    } 
-
-    const getProdutos = async (type) => {
-        try {
-        const response = await fetch('http://localhost:3030/produtos?type=' + filtro, {
-            method: 'GET',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-        });
-        
-        const data = await response.json();
-        console.log(data)
-        setProdutos(data);
-
-        } catch (error) {
-        console.error('Error:', error);
-        }
-    }
-
-    const filtrar = (e) => {
-        setFiltro(e.target.value);
-        //getProdutos(e.target.value);
-    }
+    const [produtos, setProdutos] = useState([]);
 
     useEffect(() => {
-        getProdutos(filtro);
-    }, [filtro]);
+        const getProdutos = async () => {
+            try {
+                const response = await fetch('http://localhost:3030/produtos', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+                const data = await response.json();
+
+                const sorted = data.sort((a, b) => {
+                    const avgA = a.reviews && a.reviews.length > 0
+                        ? a.reviews.reduce((sum, r) => sum + r.score, 0) / a.reviews.length
+                        : 0;
+                    const avgB = b.reviews && b.reviews.length > 0
+                        ? b.reviews.reduce((sum, r) => sum + r.score, 0) / b.reviews.length
+                        : 0;
+                    return avgB - avgA;
+                });
+
+                setProdutos(sorted.slice(0, 6));
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        getProdutos();
+    }, []);
 
     return (
         <div>
             <Slider />
-            <ProdutoCard/>
-            <UserComponent />
-            <section>
-                <select onChange={filtrar}>
-                    <option value="Comida">Comida</option>
-                    <option value="Roupa">Roupa</option>
-                    <option value="Limpeza">Limpeza</option>
-                </select>
-            </section>
-             <div class="comida-list">
+            <div className="comida-list">
                 {produtos.map((produto) => (
-                    <ProdutoCard {...produto} />
+                    <ProdutoCard
+                        key={produto.id}
+                        id={produto.id}
+                        title={produto.name}
+                        price={produto.price}
+                        type={produto.category}
+                        description={produto.description}
+                        reviews={produto.reviews}
+                    />
                 ))}
-            </div> 
-            <input value={userName} onChange={handleChangeInput} />
-            <button onClick={handleAddUser}>Add</button>
-            <ul>
-                {users.map((user) => (
-                    <p key={user.id}>{user.name}</p>
-                ))}
-            </ul>
+            </div>
         </div>
-    )
-}
+    );
+};
+
 export default Home;
