@@ -17,7 +17,9 @@ function Header () {
     return (
         <header class="header">
             <div class="logo">
-                <h1>Produtos</h1>
+                <img src="/logopawc.png" alt="Logo" />
+                <h1>PepinoShopping</h1>
+                <p>TM</p>
             </div>
             <nav class="nav">
                 <ul class="nav-list" onClick={openMenu}>

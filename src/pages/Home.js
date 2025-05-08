@@ -44,6 +44,7 @@ const Home = () => {
     return (
         <div>
             <Slider />
+            <h1>Top Produtos:</h1>
             <div className="comida-list">
                 {produtos.map((produto) => (
                     <ProdutoCard
