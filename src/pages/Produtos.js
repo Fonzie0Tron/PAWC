@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProdutoCard from "../components/ProdutoCard";
-
-{/*a. Lista em forma de grelha com todos os produtos disponíveis na base
-de dados; feito
-b. Paginação; feito
-c. Ordenar produtos por preço ou rating; feito
-d. Filtrar por tipo de produto; feito */}
+import Filter from "../components/Filter";
 
 function Produtos() {
     const [produtos, setProdutos] = useState([]);
@@ -25,7 +20,6 @@ function Produtos() {
             });
             const data = await response.json();
             setProdutos(data);
-            // Extract unique categories from products
             const uniqueCategories = [...new Set(data.map(product => product.category))];
             setCategories(uniqueCategories);
         } catch (error) {
@@ -52,9 +46,9 @@ function Produtos() {
 
     const sortedProducts = [...filteredProducts].sort((a, b) => {
         if (sortBy === "price descending") {
-            return b.price - a.price;  // Higher price first
+            return b.price - a.price;
         } else if (sortBy === "price ascending") {
-            return a.price - b.price;  // Lower price first
+            return a.price - b.price;
         } else if (sortBy === "rating descending" || sortBy === "rating ascending") {
             const avgA = a.reviews && a.reviews.length > 0 
                 ? a.reviews.reduce((sum, r) => sum + r.score, 0) / a.reviews.length 
@@ -84,17 +78,11 @@ function Produtos() {
                         <option value="rating ascending">Avaliação: Pior para Melhor</option>
                     </select>
                 </div>
-                <div className="filter-group">
-                    <label>Filtrar por tipo:</label>
-                    <select value={filterType} onChange={handleFilter}>
-                        <option value="all">Todos</option>
-                        {[...new Set(categories.map(category => category.split(' ')[0]))].sort().map(firstWord => (
-                            <option key={firstWord} value={firstWord}>
-                                {firstWord}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <Filter
+                    categories={categories}
+                    filterType={filterType}
+                    onFilterChange={handleFilter}
+                />
             </div>
 
             <div className="produtos-grid">

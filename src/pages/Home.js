@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import Slider from "../components/Slider";
 import ProdutoCard from "../components/ProdutoCard";
-
-{/* a. Seção com “top produtos” (produtos com maior rating)
-b. Campo de pesquisa (pesquisa por nome de produto, tipo, categoria,
-etc.) */}
-
+import Filter from "../components/Filter";
 
 const Home = () => {
     const [allProdutos, setAllProdutos] = useState([]);
@@ -69,27 +65,21 @@ const Home = () => {
     return (
         <div>
             <Slider />
-            <div className="flex justify-center mb-4 space-x-4">
-                <select
-                    value={filterType}
-                    onChange={handleFilter}
-                    className="h-10 bg-white rounded-lg border border-gray-300 px-3 pr-8 focus:border-blue-500 focus:outline-none appearance-none"
-                >
-                    <option value="all">Todos os tipos</option>
-                    {categories.sort().map(cat => (
-                        <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                </select>
+            <div className="search-container">
+                <Filter
+                    categories={categories}
+                    filterType={filterType}
+                    onFilterChange={handleFilter}
+                />
                 <input
                     type="text"
                     placeholder="Buscar produtos..."
                     value={search}
                     onChange={e => setSearch(e.target.value)}
-                    className="pl-4 pr-4 h-10 bg-white rounded-lg w-full max-w-md border border-gray-300 focus:border-blue-500 focus:outline-none transition-shadow shadow-sm focus:shadow-md"
                 />
             </div>
 
-            <h1>
+            <h1 className="produtos-title">
                 {search.trim() !== "" || filterType !== "all"
                     ? `Resultados${filterType !== "all" ? `: ${filterType}` : ""}${search.trim() !== "" ? ` para \"${search}\"` : ""}`
                     : "Top Produtos:"}
