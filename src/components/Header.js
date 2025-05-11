@@ -23,10 +23,10 @@ function Header () {
             </div>
             <nav class="nav">
                 <ul class="nav-list" onClick={openMenu}>
-                    <li><NavLink to='/' >Home</NavLink></li>
-                    <li><NavLink to='/produtos' >Produtos</NavLink></li>
-                    <li><NavLink to='/favoritos' >Favoritos</NavLink></li>
-                    <li><NavLink to="/carrinho" className="cart-link">Carrinho ({totalItems})</NavLink></li>
+                    <li><NavLink to='/' className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink></li>
+                    <li><NavLink to='/produtos' className={({ isActive }) => isActive ? "active" : ""}>Produtos</NavLink></li>
+                    <li><NavLink to='/favoritos' className={({ isActive }) => isActive ? "active" : ""}>Favoritos</NavLink></li>
+                    <li><NavLink to="/carrinho" className={({ isActive }) => isActive ? "cart-link active" : "cart-link"}>Carrinho ({totalItems})</NavLink></li>
                 </ul>
             </nav>
             <div class="menu-toggle" id="menu-toggle" onClick={openMenu}>
