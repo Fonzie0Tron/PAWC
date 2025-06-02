@@ -12,15 +12,15 @@ function Produtos() {
 
     const getProdutos = async () => {
         try {
-            const response = await fetch('http://localhost:3030/produtos', {
+            const response = await fetch(`http://localhost:5000/api/v1/products`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },
             });
             const data = await response.json();
-            setProdutos(data);
-            const uniqueCategories = [...new Set(data.map(product => product.category))];
+            setProdutos(data.products);
+            const uniqueCategories = [...new Set(data.products.map(product => product.category))];
             setCategories(uniqueCategories);
         } catch (error) {
             console.error('Error:', error);
@@ -29,7 +29,7 @@ function Produtos() {
 
     useEffect(() => {
         getProdutos();
-    }, []);
+    }, [currentPage]);
 
     const handleSort = (e) => {
         setSortBy(e.target.value);

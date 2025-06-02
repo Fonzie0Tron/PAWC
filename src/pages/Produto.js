@@ -18,22 +18,20 @@ function Produto() {
 
     const getProduto = async () => {
         try {
-
-            const response = await fetch(`http://localhost:3030/produtos/${id}`, {
+            const response = await fetch(`http://localhost:5000/api/v1/products/${id}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             });
             const data = await response.json();
             setProduto(data);
 
-
+            // Get similar products by category
             const response2 = await fetch(
-                `http://localhost:3030/produtos?category=${encodeURIComponent(data.category)}`,
+                `http://localhost:5000/api/v1/products/categories/${encodeURIComponent(data.category)}?page=1&per_page=4`,
                 { method: "GET", headers: { "Content-Type": "application/json" } }
             );
             const lista = await response2.json();
-
-            setSimilares(lista.filter(p => p.id !== data.id));
+            setSimilares(lista.products.filter(p => p.id !== data.id));
         } catch (error) {
             console.error("Error:", error);
         }

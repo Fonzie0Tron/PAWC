@@ -5,7 +5,7 @@ function Slider () {
         <section class="slider">
             <div>
                 <h2>Bem-vindo a PepinoShopping!</h2>
-                <p>Onde você pode encontra tudo, porque não vendemos só pepino!</p>
+                <p>Onde você pode encontrar tudo, porque não vendemos só pepino!</p>
             </div>
         </section>
     )

@@ -13,13 +13,14 @@ const Home = () => {
     useEffect(() => {
         const getProdutos = async () => {
             try {
-                const response = await fetch('http://localhost:3030/produtos', {
+                const response = await fetch('http://localhost:5000/api/v1/products?page=1&per_page=100', {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
                 const data = await response.json();
+                const products = data.products;
 
-                const sorted = data.sort((a, b) => {
+                const sorted = products.sort((a, b) => {
                     const avgA = a.reviews && a.reviews.length > 0
                         ? a.reviews.reduce((sum, r) => sum + r.score, 0) / a.reviews.length
                         : 0;
